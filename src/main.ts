@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 
-import HelloWorldScene from './scenes/HelloWorldScene'
-
+import MainScene from './scenes/MainScene';
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
 	width: 800,
@@ -13,7 +12,7 @@ const config: Phaser.Types.Core.GameConfig = {
 			debug: true
 		}
 	},
-	scene: [HelloWorldScene],
+	scene: [MainScene],
 
 	
 }

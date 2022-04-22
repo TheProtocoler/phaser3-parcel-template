@@ -1,13 +1,13 @@
 import Phaser from 'phaser'
 
-export default class HelloWorldScene extends Phaser.Scene
+export default class MainScene extends Phaser.Scene
 {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 	constructor()
 	{
-		super('hello-world')
+		super("MainScene")
 	}
 
 	preload()
@@ -24,13 +24,23 @@ export default class HelloWorldScene extends Phaser.Scene
     create()
     {
         this.add.image(400, 300, 'sky')
+        //console.log(this.randomXandYTileGenerator())
         this.platforms = this.physics.add.staticGroup();
+        
         const ground = this.platforms.create(400, 568, 'ground') as Phaser.Physics.Arcade.Sprite;
         ground.setScale(2).refreshBody();
 
-        this.platforms.create(600, 400, 'ground')
-        this.platforms.create(50, 250, 'ground')
-        this.platforms.create(750, 220, 'ground')
+        //this.platforms.create(100, 500, 'ground')
+        // this.platforms.create(50, 250, 'ground')
+        // this.platforms.create(750, 220, 'ground')
+
+        // this.platforms.create(64, 534, "ground")
+        // this.platforms.create(53, 417, 'ground')
+
+        this.createPlatforms("ground")
+        this.createPlatforms("ground")
+        this.createPlatforms("ground")
+
 
         this.player = this.physics.add.sprite(100, 450, 'dude');
         this.player.setBounce(.2);
@@ -66,6 +76,7 @@ export default class HelloWorldScene extends Phaser.Scene
     }
 
     update(){
+       
         // = this.cursors.left && this.cursors
         if(this.cursors?.left?.isDown){
             this.player?.setVelocityX(-160)
@@ -84,5 +95,20 @@ export default class HelloWorldScene extends Phaser.Scene
         {
             this.player.setVelocityY(-330);
         }
+    }
+    randomXandYTileGenerator(): [number, number]{
+        let rnd = new Phaser.Math.RandomDataGenerator()
+        
+        let x_val = rnd.between(0, 700)
+        let y_val = rnd.between(300, 400)
+        console.log([x_val, y_val])
+        return [x_val, y_val]
+
+    }
+
+    createPlatforms(sprite): Phaser.Physics.Arcade.StaticBody{
+        let rndVal = this.randomXandYTileGenerator();
+
+        return this.platforms?.create(rndVal[0], rndVal[1], sprite)
     }
 }
